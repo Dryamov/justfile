@@ -80,7 +80,7 @@ home_dir := env_var_or_default('HOME', 'default')
 
 # run code checker
 @upload *FILES="--all":
-    trunk check $FILES --upload --no-fix --series main --token $TRUNK_TOKEN
+    trunk check $FILES --upload --series main --token $TRUNK_TOKEN
 
 # create commit
 @commit MESSAGE *FLAGS:
