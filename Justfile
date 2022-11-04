@@ -68,7 +68,7 @@ home_dir2 := env_var_or_default('key', 'default')
     just --edit
 
 # run code checker
-check *FILES="--all":
+upload *FILES="--all":
     trunk check $FILES --upload --series main --token $TRUNK_TOKEN
 
 # run code checker
@@ -93,11 +93,27 @@ check *FILES="--all":
 @completions $SHELL="fish":
     just --completions  $SHELL > completions/just.$SHELL
 
-@runner command="status":
+# install gitlav self-hosted runner
+@runner: _runner-download _runner-config
+
+_runner-download:
     #!/usr/bin/env bash
     set -euxo pipefail
-    echo "$invocation_directory"
-    function mkdir (){
-      mkdir actions-runner && cd actions-runner
-    }
-    $command
+    mkdir -p actions-runner
+    curl -o actions-runner/actions-runner-linux-x64-2.298.2.tar.gz -L https://github.com/actions/runner/releases/download/v2.298.2/actions-runner-linux-x64-2.298.2.tar.gz
+    # Extract the installer
+    tar -C actions-runner  -xvf  ./actions-runner/actions-runner-linux-x64-2.298.2.tar.gz
+
+_runner-config:
+    #!/usr/bin/env bash
+    set -euxo pipefail
+    cd actions-runner && \
+    ./config.sh --unattended \
+        --name archlibyx \
+        --url https://github.com/Dryamov/justfile-template \
+        --token $RUNNER_TOKEN \
+        --replace true 
+
+_runner-start:
+    cd actions-runner \
+    && ./run.sh
