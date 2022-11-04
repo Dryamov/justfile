@@ -96,7 +96,7 @@ home_dir := env_var_or_default('HOME', 'default')
     just --completions  $SHELL
 
 # create commit
-@commit MESSAGE="default message":
+@commit MESSAGE="WIP":
     git commit -m "{{ MESSAGE }}"
 
 # create commit
@@ -104,7 +104,7 @@ home_dir := env_var_or_default('HOME', 'default')
     git add $FILES
 
 # push files to remote
-@push: add commit
+@push:
     git push
 
 # push files to remote
