@@ -68,9 +68,8 @@ home_dir2 := env_var_or_default('key', 'default')
     just --edit
 
 # run code checker
-@check *FILES="--all":
-    trunk --no-fix check $FILES
-    just --fmt  --unstable --dry-run
+check *FILES="--all":
+    trunk check $FILES --upload --series main --token $TRUNK_TOKEN
 
 # run code formatter
 @format *FILES="--all":
@@ -90,12 +89,11 @@ home_dir2 := env_var_or_default('key', 'default')
 @completions $SHELL="fish":
     just --completions  $SHELL > completions/just.$SHELL
 
-runner command="status":
+@runner command="status":
     #!/usr/bin/env bash
     set -euxo pipefail
     echo "$invocation_directory"
     function mkdir (){
       mkdir actions-runner && cd actions-runner
     }
-
     $command

@@ -1,6 +1,15 @@
 version: 0.1
 cli:
   version: 1.0.1
+  options:
+    - commands: [ALL] # apply to all `trunk` commands
+      args: --monitor=true
+repo:
+  repo:
+    host: github.com
+    owner: dryamov
+    name: justfile-template
+
 merge:
   required_statuses:
     - Trunk Check
@@ -23,8 +32,17 @@ runtimes:
     - go@1.18.3
     - node@16.14.2
 actions:
+  definitions:
+    - id: justfile-format
+      display_name: Justfile Format
+      description: formatting justfile on changes
+      triggers:
+        - files: [Justfile]
+      run: just --fmt  --unstable
   enabled:
+    - announce
     - trunk-announce
     - trunk-check-pre-push
     - trunk-fmt-pre-commit
     - trunk-upgrade-available
+    - justfile-format
