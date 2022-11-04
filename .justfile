@@ -58,4 +58,4 @@ set fallback := true
 
 # generate shell completion
 @completions $SHELL="fish":
-    just --completions  $SHELL > completions/just.fish
+    just --completions  $SHELL > completions/just.$SHELL
