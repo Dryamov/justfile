@@ -28,12 +28,3 @@ jobs:
         # You may pin to the exact commit or the version.
         # uses: step-security/harden-runner@2e205a28d0e1da00c5f53b161f4067b052c61f34
         uses: step-security/harden-runner@v1.5.0
-        with:
-          # Only these endpoints will be allowed if egress-policy is set to block
-          allowed-endpoints: # optional, default is 
-          # Policy for outbound traffic, can be either audit or block
-          egress-policy: # optional, default is block
-          # Used to avoid github rate limiting
-          token: # optional, default is ${{ github.token }}
-          # Disable sending telemetry to StepSecurity API, can be set to true or false. This can only be set to true when egress-policy is set to block
-          disable-telemetry: # optional, default is false
