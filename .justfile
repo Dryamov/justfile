@@ -87,10 +87,6 @@ home_dir := env_var_or_default('HOME', 'default')
 @upload *FILES="--all":
     trunk check $FILES --upload --series main --token $TRUNK_TOKEN
 
-# create commit
-@commit MESSAGE *FLAGS:
-    git commit {{ FLAGS }} -m "{{ MESSAGE }}"
-
 # upgrade trunk
 @upgrade:
     trunk upgrade
@@ -98,3 +94,23 @@ home_dir := env_var_or_default('HOME', 'default')
 # generate shell completion
 @completions $SHELL="fish":
     just --completions  $SHELL
+
+# create commit
+@commit MESSAGE="default message":
+    git commit -m "{{ MESSAGE }}"
+
+# create commit
+@add +FILES=".":
+    git add $FILES
+
+# push files to remote
+@push: add commit
+    git push
+
+# push files to remote
+@pull: fetch
+    git pull
+
+# push files to remote
+@fetch:
+    git fetch
