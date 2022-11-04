@@ -35,7 +35,6 @@ set fallback := true
 # absolute path to the current directory
 
 invocation_directory := invocation_directory()
-home_dir := env_var('HOME')
 
 # absolute path to the just executable
 
@@ -48,8 +47,10 @@ justfile_directory := justfile_directory()
 # retrieves the path of the current justfile
 
 justfile := justfile()
-TERM := 'xterm-256color'
-home_dir2 := env_var_or_default('key', 'default')
+
+# retrieves the path of the user home directory
+
+home_dir := env_var_or_default('HOME', 'default')
 
 # select one or more recipes to run using a binary
 @__default:
@@ -68,11 +69,7 @@ home_dir2 := env_var_or_default('key', 'default')
     just --edit
 
 # run code checker
-upload *FILES="--all":
-    trunk check $FILES --upload --series main --token $TRUNK_TOKEN
-
-# run code checker
-check *FILES="--all":
+@check *FILES="--all":
     trunk check --fix $FILES $FILES
 
 # run code formatter
@@ -80,6 +77,10 @@ check *FILES="--all":
     just --fmt  --unstable
     trunk fmt $FILES
     trunk check  --fix $FILES
+
+# run code checker
+@upload *FILES="--all":
+    trunk check $FILES --upload --no-fix --series main --token $TRUNK_TOKEN
 
 # create commit
 @commit MESSAGE *FLAGS:
@@ -91,29 +92,4 @@ check *FILES="--all":
 
 # generate shell completion
 @completions $SHELL="fish":
-    just --completions  $SHELL > completions/just.$SHELL
-
-# install gitlav self-hosted runner
-@runner: _runner-download _runner-config
-
-_runner-download:
-    #!/usr/bin/env bash
-    set -euxo pipefail
-    mkdir -p actions-runner
-    curl -o actions-runner/actions-runner-linux-x64-2.298.2.tar.gz -L https://github.com/actions/runner/releases/download/v2.298.2/actions-runner-linux-x64-2.298.2.tar.gz
-    # Extract the installer
-    tar -C actions-runner  -xvf  ./actions-runner/actions-runner-linux-x64-2.298.2.tar.gz
-
-_runner-config:
-    #!/usr/bin/env bash
-    set -euxo pipefail
-    cd actions-runner && \
-    ./config.sh --unattended \
-        --name archlibyx \
-        --url https://github.com/Dryamov/justfile-template \
-        --token $RUNNER_TOKEN \
-        --replace true 
-
-_runner-start:
-    cd actions-runner \
-    && ./run.sh
+    just --completions  $SHELL
