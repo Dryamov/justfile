@@ -1,9 +1,11 @@
 #!/usr/bin/env just --justfile
 #Aliases allow recipes to be invoked with alternative names:
+#---------------------------- ALIASES ----------------------------------------#
 
-alias fmt := format
-alias chk := check
+# alias fmt := format
+# alias chk := check
 
+#---------------------------- SETTINGS ---------------------------------------#
 # allow to override earlier recipes with the same name.
 
 set allow-duplicate-recipes := true
@@ -33,6 +35,7 @@ set ignore-comments := true
 set fallback := true
 
 # absolute path to the current directory
+#---------------------------- VARIABLES --------------------------------------#
 
 invocation_directory := invocation_directory()
 
@@ -51,6 +54,8 @@ justfile := justfile()
 # retrieves the path of the user home directory
 
 home_dir := env_var_or_default('HOME', 'default')
+
+#---------------------------- RECIPRE BLOCK-----------------------------------#
 
 # select one or more recipes to run using a binary
 @__default:
