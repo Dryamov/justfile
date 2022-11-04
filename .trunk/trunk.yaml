@@ -1,0 +1,30 @@
+version: 0.1
+cli:
+  version: 1.0.1
+merge:
+  required_statuses:
+    - Trunk Check
+    - Unit tests & test coverage
+    - Integration tests
+plugins:
+  sources:
+    - id: trunk
+      ref: v0.0.6
+      uri: https://github.com/trunk-io/plugins
+lint:
+  enabled:
+    - markdownlint@0.32.2
+    - gitleaks@8.15.0
+    - actionlint@1.6.22
+    - git-diff-check
+    - prettier@2.7.1
+runtimes:
+  enabled:
+    - go@1.18.3
+    - node@16.14.2
+actions:
+  enabled:
+    - trunk-announce
+    - trunk-check-pre-push
+    - trunk-fmt-pre-commit
+    - trunk-upgrade-available

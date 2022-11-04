@@ -32,21 +32,51 @@ set ignore-comments := true
 
 set fallback := true
 
+# absolute path to the current directory
+
+invocation_directory := invocation_directory()
+home_dir := env_var('HOME')
+
+# absolute path to the just executable
+
+just_executable := just_executable()
+
+# retrieves the path of the parent directory of the current justfile.
+
+justfile_directory := justfile_directory()
+
+# retrieves the path of the current justfile
+
+justfile := justfile()
+TERM := 'xterm-256color'
+home_dir2 := env_var_or_default('key', 'default')
+
 # select one or more recipes to run using a binary
-@default:
+@__default:
     just --choose
+
+# show usefull info
+@info:
+    just --evaluate
 
 # list available recipes and their arguments
 @list:
     just --list  
 
+# Edit justfile
+@edit:
+    just --edit
+
 # run code checker
-@check *TARGET="--all":
-    trunk --fix check $TARGET
+@check *FILES="--all":
+    trunk --no-fix check $FILES
+    just --fmt  --unstable --dry-run
 
 # run code formatter
-@format *TARGET="--all":
-    trunk --fix check $TARGET
+@format *FILES="--all":
+    just --fmt  --unstable
+    trunk fmt $FILES
+    trunk check  --fix $FILES
 
 # create commit
 @commit MESSAGE *FLAGS:
@@ -59,3 +89,13 @@ set fallback := true
 # generate shell completion
 @completions $SHELL="fish":
     just --completions  $SHELL > completions/just.$SHELL
+
+runner command="status":
+    #!/usr/bin/env bash
+    set -euxo pipefail
+    echo "$invocation_directory"
+    function mkdir (){
+      mkdir actions-runner && cd actions-runner
+    }
+
+    $command
