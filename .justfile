@@ -47,3 +47,15 @@ set fallback := true
 # run code formatter
 @format *TARGET="--all":
     trunk --fix check $TARGET
+
+# create commit
+@commit MESSAGE *FLAGS:
+  git commit {{FLAGS}} -m "{{MESSAGE}}"
+
+# upgrade trunk
+@upgrade: 
+    trunk upgrade
+
+# generate shell completion
+@completions $SHELL="fish":
+    just --completions  $SHELL > completions/just.fish
