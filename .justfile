@@ -50,10 +50,10 @@ set fallback := true
 
 # create commit
 @commit MESSAGE *FLAGS:
-  git commit {{FLAGS}} -m "{{MESSAGE}}"
+    git commit {{ FLAGS }} -m "{{ MESSAGE }}"
 
 # upgrade trunk
-@upgrade: 
+@upgrade:
     trunk upgrade
 
 # generate shell completion
