@@ -33,6 +33,6 @@ jobs:
           # A valid semver specifier of the just version to install
           just-version: 1.7.0 # optional
           
-#       - name: Check justfile
-#         run: |
-#           just --fmt  --unstable --check
+      - name: Check justfile
+        run: |
+          just --fmt  --unstable --check
