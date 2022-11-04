@@ -71,6 +71,10 @@ home_dir2 := env_var_or_default('key', 'default')
 check *FILES="--all":
     trunk check $FILES --upload --series main --token $TRUNK_TOKEN
 
+# run code checker
+check *FILES="--all":
+    trunk check --fix $FILES $FILES
+
 # run code formatter
 @format *FILES="--all":
     just --fmt  --unstable
