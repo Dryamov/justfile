@@ -114,3 +114,7 @@ home_dir := env_var_or_default('HOME', 'default')
 # push files to remote
 @fetch:
     git fetch
+
+# show file status
+@status:
+    git status
