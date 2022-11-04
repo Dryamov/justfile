@@ -37,3 +37,4 @@ jobs:
         uses: trunk-io/trunk-action@v1.0.4
         with:
           trunk-token: ${{ secrets.TRUNK_TOKEN }}
+          cache: false
