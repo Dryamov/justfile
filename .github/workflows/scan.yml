@@ -1,0 +1,39 @@
+# This is a basic workflow to help you get started with Actions
+
+name: code scan
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the "main" branch
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  scan:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v3
+      - name: Harden Runner
+        # You may pin to the exact commit or the version.
+        # uses: step-security/harden-runner@2e205a28d0e1da00c5f53b161f4067b052c61f34
+        uses: step-security/harden-runner@v1.5.0
+        with:
+          # Only these endpoints will be allowed if egress-policy is set to block
+          allowed-endpoints: # optional, default is 
+          # Policy for outbound traffic, can be either audit or block
+          egress-policy: # optional, default is block
+          # Used to avoid github rate limiting
+          token: # optional, default is ${{ github.token }}
+          # Disable sending telemetry to StepSecurity API, can be set to true or false. This can only be set to true when egress-policy is set to block
+          disable-telemetry: # optional, default is false
