@@ -33,3 +33,6 @@ jobs:
       - name: Check justfile
         run: |
           just --fmt  --unstable --check
+
+      - name: Trunk Check
+        uses: trunk-io/trunk-action@v1
