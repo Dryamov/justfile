@@ -16,8 +16,6 @@ jobs:
       - name: Trunk Check
         uses: ./ # external users, use: trunk-io/trunk-action@v1
         with:
-          trunk-token: ${{ secrets.TRUNK_TOKEN }}
-        with:
           # Path to Trunk Launcher. If not provided, we'll look for it the repo root, `.trunk/bin` and `tools/`. If it can't be found anywhere and is not provided explicitly, we'll download it on demand.
           #trunk-path: # optional
           # Label to append to the check run name (useful if running Trunk Check on multiple platforms)
