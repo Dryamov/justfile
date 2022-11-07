@@ -1,2 +1,2 @@
-# Just template
-Don't forget to customize your repository
+# Justfile template
+Don't forget to customize your repository.
